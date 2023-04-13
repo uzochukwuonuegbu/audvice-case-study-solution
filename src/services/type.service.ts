@@ -21,17 +21,17 @@ export class TypeService implements ITypeService {
         });
       
         if (dualTyping) {
-            const dualType = await this.typeRepository.findById(type.dual_typing_id);
-            type.dual_typing = dualType;
+            // const dualType = await this.typeRepository.findById(type.dual_typing_id);
+            type.dual_typing = dualTyping;
             return type;
         }
       
         return type;
       }
 
-      public async getTypeById(id: string): Promise<Type> {
-        return this.typeRepository.findById(id);
-      }
+    public async getTypeById(id: string): Promise<Type> {
+    return this.typeRepository.findById(id);
+    }
 
     //   TODO: split to smaller private functions
     public async getTypeCounters(typeName: string): Promise<Type[]> {
@@ -50,4 +50,12 @@ export class TypeService implements ITypeService {
     
         return typeCounters;
     }
+
+    public async updateType(id: string, data: any): Promise<void> {
+        await this.typeRepository.update(id, data);
+    }
+
+    public async deleteType(id: string): Promise<void> {
+      await this.typeRepository.delete(id);
+  }
 }

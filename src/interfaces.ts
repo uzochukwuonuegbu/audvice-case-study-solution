@@ -16,6 +16,8 @@ export interface ITypeService {
   createType(name: string, colour: string, dualTypingName: string | undefined): Promise<Type>
   getTypeById(id: string): Promise<Type>
   getTypeCounters(name: string): Promise<Type[]>
+  updateType(id: string, data: any): Promise<void>
+  deleteType(id: string): Promise< void>
 }
 
 export interface ITypeEffectivenessService {

@@ -8,6 +8,7 @@ export class TypeController implements ITypeController {
     public async createType(): Promise<ExpressRouteFunc> {
         return async (req: Request, res: Response) => {
             try {
+                // TODO: validate input
                 const { name, color, dualType = undefined } = req.body;
                 const type = await this.typeService.createType(name, color, dualType);
                 res.status(201).json(type);
@@ -46,12 +47,9 @@ export class TypeController implements ITypeController {
     public async updateType(): Promise<ExpressRouteFunc> {
         return async (req: Request, res: Response) => {
             try {
-                const type = await this.typeService.updateType(req.params.id, req.body);
-                if (type) {
-                  res.status(200).json(type);
-                } else {
-                  res.status(404).json({ error: 'Type not found' });
-                }
+                // TODO: validate input
+                await this.typeService.updateType(req.params.id, req.body);
+                res.status(200).json({ message: 'Updated Successfully' });
               } catch (err) {
                 res.status(400).json({ error: err.message });
               }
@@ -61,12 +59,8 @@ export class TypeController implements ITypeController {
     public async deleteType(): Promise<ExpressRouteFunc> {
         return async (req: Request, res: Response) => {
             try {
-                const result = await this.typeService.deleteType(req.params.id);
-                if (result) {
-                  res.status(200).json({ message: 'Type deleted' });
-                } else {
-                  res.status(404).json({ error: 'Type not found' });
-                }
+                await this.typeService.deleteType(req.params.id);
+                res.status(200).json({ message: 'Type deleted' });
               } catch (err) {
                 res.status(400).json({ error: err.message });
               }
