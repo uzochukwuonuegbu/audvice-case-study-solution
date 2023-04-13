@@ -5,17 +5,18 @@ interface TypeAttributes {
   id?: number;
   name: string;
   color: string;
-  dual_typing?: string;
+  dual_typing?: Type;
 }
 
 export class Type extends Model<TypeAttributes> implements TypeAttributes {
   public id!: number;
   public name!: string;
   public color!: string;
-  public dual_typing?: string;
+  public dual_typing?: Type;
 
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
+  dual_typing_id: string;
 }
 
 Type.init(

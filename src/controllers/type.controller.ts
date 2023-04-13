@@ -8,8 +8,8 @@ export class TypeController implements ITypeController {
     public async createType(): Promise<ExpressRouteFunc> {
         return async (req: Request, res: Response) => {
             try {
-                const { name, color } = req.body;
-                const type = await this.typeService.createType({ name, color });
+                const { name, color, dualType = undefined } = req.body;
+                const type = await this.typeService.createType(name, color, dualType);
                 res.status(201).json(type);
             } catch (err) {
                 res.status(400).json({ error: err.message });
