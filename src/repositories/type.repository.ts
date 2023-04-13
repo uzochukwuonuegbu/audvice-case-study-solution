@@ -14,8 +14,8 @@ export class TypeRepository implements ITypeRepository {
       }
     
       async update(id, updates) {
-        const type = await Type.update(id, updates);
-        return type;
+        await Type.update(id, updates);
+        // return type;
       }
     
       async delete(id) {

@@ -1,7 +1,7 @@
 import { Router } from "express";
-import { TypeController } from "../controllers/type.controller";
+import { getTypeController } from "../dependency-injection";
 
-const ctrl = new TypeController();
+const ctrl = getTypeController();
 
 const router = Router({
   mergeParams: true
@@ -22,7 +22,7 @@ router.post(
 
 router.get(
   routes.getType,
-  ctrl.getType()
+  ctrl.getTypeCounters()
 );
 
 router.get(
