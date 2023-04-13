@@ -2,14 +2,14 @@ import { Model, DataTypes } from 'sequelize';
 import { sequelize } from '../infrastructure/sequelize.orm';
 
 interface TypeAttributes {
-  id?: number;
+  id?: string;
   name: string;
   color: string;
   dual_typing?: Type;
 }
 
 export class Type extends Model<TypeAttributes> implements TypeAttributes {
-  public id!: number;
+  public id!: string;
   public name!: string;
   public color!: string;
   public dual_typing?: Type;

@@ -20,7 +20,7 @@ export class TypeController implements ITypeController {
     public async getTypeCounters(): Promise<ExpressRouteFunc> {
         return async (req: Request, res: Response) => {
             try {
-                const counters = await typeService.getTypeCounters(req.params.name);
+                const counters = await this.typeService.getTypeCounters([req.params.name]);
                 res.status(200).json(counters);
             } catch (err) {
                 res.status(400).json({ error: err.message });
@@ -31,7 +31,7 @@ export class TypeController implements ITypeController {
     public async getTypeById(): Promise<ExpressRouteFunc> {
         return async (req: Request, res: Response) => {
             try {
-                const type = await typeService.getTypeById(req.params.id);
+                const type = await this.typeService.getTypeById(req.params.id);
                 if (type) {
                   res.status(200).json(type);
                 } else {
@@ -46,7 +46,7 @@ export class TypeController implements ITypeController {
     public async updateType(): Promise<ExpressRouteFunc> {
         return async (req: Request, res: Response) => {
             try {
-                const type = await typeService.updateType(req.params.id, req.body);
+                const type = await this.typeService.updateType(req.params.id, req.body);
                 if (type) {
                   res.status(200).json(type);
                 } else {
@@ -61,7 +61,7 @@ export class TypeController implements ITypeController {
     public async deleteType(): Promise<ExpressRouteFunc> {
         return async (req: Request, res: Response) => {
             try {
-                const result = await typeService.deleteType(req.params.id);
+                const result = await this.typeService.deleteType(req.params.id);
                 if (result) {
                   res.status(200).json({ message: 'Type deleted' });
                 } else {
