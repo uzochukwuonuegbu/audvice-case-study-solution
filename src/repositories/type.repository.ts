@@ -14,7 +14,7 @@ export class TypeRepository implements ITypeRepository {
       }
 
       async find(query?: any) {
-        return Type.findByPk(query);
+        return Type.findOne(query);
       }
     
       async update(id, updates) {

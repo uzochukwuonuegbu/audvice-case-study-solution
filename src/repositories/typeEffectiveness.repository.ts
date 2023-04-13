@@ -1,3 +1,4 @@
+import { Op } from "sequelize";
 import { ITypeEffectivenessRepository } from "../interfaces";
 import { TypeEffectiveness } from "../models/typeEffectiveness.model";
 
@@ -13,7 +14,7 @@ export class TypeEffectivenessRepository implements ITypeEffectivenessRepository
       }
 
       async find(query?: any) {
-        return TypeEffectiveness.findByPk(query);
+        return TypeEffectiveness.findOne(query);
       }
     
       async update(id, updates) {
@@ -27,5 +28,13 @@ export class TypeEffectivenessRepository implements ITypeEffectivenessRepository
     
       async findAll(query?: any) {
         return TypeEffectiveness.findAll(query);
+      }
+
+      async findBySourceIds(sourceIds: string[]) {
+        return TypeEffectiveness.findAll({ where: { sourceId: { [Op.in]: sourceIds } } });
+      }
+
+      async findByTargetIds(targetIds: string[]) {
+        return TypeEffectiveness.findAll({ where: { targetId: { [Op.in]: targetIds } } });
       }
 }

@@ -1,3 +1,4 @@
+import { Op } from "sequelize";
 import { ITypeEffectivenessRepository, ITypeEffectivenessService, ITypeRepository } from "../interfaces";
 
 export class TypeEffectivenessService implements ITypeEffectivenessService {
@@ -21,14 +22,12 @@ export class TypeEffectivenessService implements ITypeEffectivenessService {
       }
     }
 
-    public async getTypeEffectivenessBySourceId(sourceId: string) {
-        try {
-            const typeEffectiveness = await this.typeEffectivenessRepository.findAll({
-              where: { sourceId, effectiveness: 2 },
-            });
-            return typeEffectiveness;
-      } catch (err) {
-        throw new Error('Failed to get TypeEffectiveness');
-      }
+    public async getTypeEffectivenessBySourceIds(sourceIds: string[]) {
+      try {
+          const typeEffectivenessArray = this.typeEffectivenessRepository.findBySourceIds(sourceIds);
+          return typeEffectivenessArray;
+    } catch (err) {
+      throw new Error('Failed to get TypeEffectiveness');
     }
+  }
   }

@@ -5,23 +5,23 @@ import { TypeEffectiveness } from './models/typeEffectiveness.model';
 export type ExpressRouteFunc = (req: Request, res: Response, next?: NextFunction) => void | Promise<void>;
 
 export interface ITypeController {
-  createType(): Promise<ExpressRouteFunc>
-  getTypeCounters(): Promise<ExpressRouteFunc>
-  getTypeById(): Promise<ExpressRouteFunc>
-  updateType(): Promise<ExpressRouteFunc>
-  deleteType(): Promise<ExpressRouteFunc>
+  createType(): ExpressRouteFunc
+  getTypeCounters(): ExpressRouteFunc
+  getTypeById(): ExpressRouteFunc
+  updateType(): ExpressRouteFunc
+  deleteType(): ExpressRouteFunc
 }
 
 export interface ITypeService {
   createType(name: string, colour: string, dualTypingName: string | undefined): Promise<Type>
   getTypeById(id: string): Promise<Type>
-  getTypeCounters(name: string): Promise<Type[]>
+  getTypeCounters(names: string[]): Promise<Type[]>
   updateType(id: string, data: any): Promise<void>
   deleteType(id: string): Promise< void>
 }
 
 export interface ITypeEffectivenessService {
-  getTypeEffectivenessBySourceId(sourceId: string): Promise<TypeEffectiveness[]>
+  getTypeEffectivenessBySourceIds(sourceIds: string[]): Promise<TypeEffectiveness[]>
 }
 
 // TODO: make DRY
@@ -32,6 +32,7 @@ export interface ITypeEffectivenessRepository {
   update(id: string, updates: any): Promise<void>;
   delete(id: string): Promise<void>;
   findAll(query?: any): Promise<TypeEffectiveness[]>;
+  findBySourceIds(sourceIds: string[]): Promise<TypeEffectiveness[]>;
 }
 export interface ITypeRepository {
   create(typeData: any): Promise<Type>;

@@ -5,7 +5,7 @@ export class TypeController implements ITypeController {
     constructor(private typeService: ITypeService) {
     }
 
-    public async createType(): Promise<ExpressRouteFunc> {
+    public createType(): ExpressRouteFunc {
         return async (req: Request, res: Response) => {
             try {
                 // TODO: validate input
@@ -18,7 +18,7 @@ export class TypeController implements ITypeController {
         }
     }
 
-    public async getTypeCounters(): Promise<ExpressRouteFunc> {
+    public getTypeCounters(): ExpressRouteFunc {
         return async (req: Request, res: Response) => {
             try {
                 const counters = await this.typeService.getTypeCounters(req.params.name);
@@ -29,7 +29,7 @@ export class TypeController implements ITypeController {
         }
     }
 
-    public async getTypeById(): Promise<ExpressRouteFunc> {
+    public getTypeById(): ExpressRouteFunc {
         return async (req: Request, res: Response) => {
             try {
                 const type = await this.typeService.getTypeById(req.params.id);
@@ -44,7 +44,7 @@ export class TypeController implements ITypeController {
         }
     }
 
-    public async updateType(): Promise<ExpressRouteFunc> {
+    public updateType(): ExpressRouteFunc {
         return async (req: Request, res: Response) => {
             try {
                 // TODO: validate input
@@ -56,7 +56,7 @@ export class TypeController implements ITypeController {
         }
     }
 
-    public async deleteType(): Promise<ExpressRouteFunc> {
+    public deleteType(): ExpressRouteFunc {
         return async (req: Request, res: Response) => {
             try {
                 await this.typeService.deleteType(req.params.id);

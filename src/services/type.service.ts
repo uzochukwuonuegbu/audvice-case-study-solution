@@ -30,25 +30,27 @@ export class TypeService implements ITypeService {
       }
 
     public async getTypeById(id: string): Promise<Type> {
-    return this.typeRepository.findById(id);
+      return this.typeRepository.findById(id);
     }
 
     //   TODO: split to smaller private functions
-    public async getTypeCounters(typeName: string): Promise<Type[]> {
-        // Get the Type record for the given type name
-        const type = await this.typeRepository.find({ where: { name: typeName } });
-        if (!type) {
-            throw new Error(`Type ${typeName} not found`);
-        }
-    
-        // Find all Type records where effectiveness is 2 for the given type
-        const typeEffectivenesses = await this.typeEffectivenessService.getTypeEffectivenessBySourceId(type.id);
-    
-        // Get the Type records for each matching TypeEffectiveness
-        const typeIds = typeEffectivenesses.map((te) => te.targetId);
-        const typeCounters = await this.typeRepository.findAll({ where: { id: { [Op.in]: typeIds } } });
-    
-        return typeCounters;
+    public async getTypeCounters(typeNames: string[]): Promise<Type[]> {
+      // Get the Type records for the given type names
+      const types = await this.typeRepository.findAll({ where: { name: { [Op.in]: typeNames } } });
+      if (types.length !== typeNames.length) {
+        throw new Error(`One or more types not found: ${typeNames.filter((name) => !types.some((type) => type.name === name)).join(', ')}`);
+      }
+
+      // Find all Type records where effectiveness is 2 for any of the given types
+      const typeIds = types.map((type) => type.id);
+      const typeEffectivenesses = await this.typeEffectivenessService.getTypeEffectivenessBySourceIds(typeIds);
+
+      // Get the Type records for each matching TypeEffectiveness
+      const targetTypeIds = typeEffectivenesses.map((te) => te.targetId);
+      const typeCounters = await this.typeRepository.findAll({ where: { id: { [Op.in]: targetTypeIds } } });
+
+      return typeCounters;
+
     }
 
     public async updateType(id: string, data: any): Promise<void> {
