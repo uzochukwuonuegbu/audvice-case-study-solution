@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+
+  type-controller-app-dev:
+    build:
+      context: ./
+      target: dev
+    links:
+      - postgres-db
+    volumes:
+      - .:/src
+    command: npm run dev
+    ports:
+      - '3000:3000'
+    environment:
+      - NODE_ENV=dev
+      - PORT=3000
+    restart: on-failure
+  postgres-db-dev:
+    image: postgres
+    environment:
+      POSTGRES_PASSWORD: mysecretpassword
+      POSTGRES_USER: myuser
+      POSTGRES_DB: mydb
+    volumes:
+      - db_data:/var/lib/postgresql/data
