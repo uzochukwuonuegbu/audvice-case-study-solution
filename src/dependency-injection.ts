@@ -6,15 +6,15 @@ import { TypeRepository } from './repositories/type.repository';
 
 
 export function getTypeController(): ITypeController {
-    return new TypeController();
+    return new TypeController(getTypeService());
 }
 
 export function getTypeService(): ITypeService {
-    return new TypeService(getTypeEffectivenessService, getTypeRepository);
+    return new TypeService(getTypeEffectivenessService(), getTypeRepository());
 }
 
 export function getTypeEffectivenessService(): ITypeEffectivenessService {
-    return new TypeEffectivenessService(getTypeRepository);
+    return new TypeEffectivenessService(getTypeRepository());
 }
 
 export function getTypeRepository(): ITypeRepository {
