@@ -20,7 +20,7 @@ export class TypeController implements ITypeController {
     public async getTypeCounters(): Promise<ExpressRouteFunc> {
         return async (req: Request, res: Response) => {
             try {
-                const counters = await this.typeService.getTypeCounters([req.params.name]);
+                const counters = await this.typeService.getTypeCounters(req.params.name);
                 res.status(200).json(counters);
             } catch (err) {
                 res.status(400).json({ error: err.message });

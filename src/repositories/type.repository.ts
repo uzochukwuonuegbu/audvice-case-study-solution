@@ -12,6 +12,10 @@ export class TypeRepository implements ITypeRepository {
       async findById(id) {
         return Type.findByPk(id);
       }
+
+      async find(query?: any) {
+        return Type.findByPk(query);
+      }
     
       async update(id, updates) {
         await Type.update(id, updates);
@@ -22,8 +26,8 @@ export class TypeRepository implements ITypeRepository {
         await Type.destroy(id);
       }
     
-      async findAll() {
-        return Type.findAll();
+      async findAll(query?: any) {
+        return Type.findAll(query);
       }
     
       async findByTypeNames(names) {
