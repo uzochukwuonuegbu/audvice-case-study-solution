@@ -4,15 +4,17 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "npm run copy:env:prod && DOTENV_CONFIG_PATH=.env npm run build && node -r dotenv/config ./.build/src/main.js",
-    "dev": "npm run copy:env:dev && DOTENV_CONFIG_PATH=dev.env ts-node -r dotenv/config ./src/main.ts",
+    "start": "npm run copy:env:prod && npm run create-db && DOTENV_CONFIG_PATH=.env npm run build && node -r dotenv/config ./.build/src/main.js",
+    "dev": "npm run copy:env:dev && npm run create-db-dev && DOTENV_CONFIG_PATH=dev.env ts-node -r dotenv/config ./src/main.ts",
     "build": "npm run lint && npm run clean && tsc",
     "lint": "tslint --project .",
     "clean": "rimraf ./.build",
     "copy:env:dev": "cp dev.env.sample dev.env",
     "copy:env:prod": "cp env.sample .env",
     "test": "jest --coverage --config ./test/jest.config.json  --runInBand --detectOpenHandles --forceExit",
-    "test:integration": "jest --config ./test/jest.config.integration.json --runInBand --forceExit"
+    "test:integration": "jest --config ./test/jest.config.integration.json --runInBand --forceExit",
+    "create-db": "psql -U postgres -f ./src/infrastructure/init.db.sql",
+    "create-db-dev": "psql -U postgres -f ./src/infrastructure/init-dev.db.sql"
   },
   "author": "",
   "license": "ISC",

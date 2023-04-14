@@ -1,6 +1,5 @@
 import { Op } from "sequelize";
-import { ITypeEffectivenessService, ITypeRepository, ITypeService } from "../interfaces";
-import { Type } from "../models/type.model";
+import { ITypeEffectivenessService, ITypeRepository, ITypeService, Type } from "../interfaces";
 
 export class TypeService implements ITypeService {
     constructor(private typeEffectivenessService: ITypeEffectivenessService, private typeRepository: ITypeRepository) {}

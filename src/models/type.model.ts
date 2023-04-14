@@ -1,21 +1,6 @@
-import { DataTypes, Model } from 'sequelize';
-import { sequelize } from '../infrastructure/sequelize.orm';
-
-
-interface TypeAttributes {
-  id?: string;
-  name: string;
-  color: string;
-}
-
-export class Type extends Model<TypeAttributes> implements TypeAttributes {
-  public id!: string;
-  public name!: string;
-  public color!: string;
-
-  public readonly createdAt!: Date;
-  public readonly updatedAt!: Date;
-}
+import { DataTypes } from 'sequelize';
+import sequelize from '../infrastructure/sequelize.orm';
+import { Type } from '../interfaces';
 
 Type.init(
   {
@@ -36,6 +21,8 @@ Type.init(
   },
   {
     sequelize,
-    modelName: 'Type',
+    tableName: 'type',
   }
 );
+
+export default Type;

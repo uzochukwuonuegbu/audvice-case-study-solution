@@ -1,8 +1,33 @@
-import { Op } from "sequelize";
-import { ITypeRepository } from "../interfaces";
-import { Type } from "../models/type.model";
+import { DataTypes, Op } from 'sequelize';
+import { ITypeRepository, Type } from '../interfaces';
+// import sequelize from '../infrastructure/sequelize.orm';
 
 export class TypeRepository implements ITypeRepository {
+    constructor(private dbClient: typeof Type) {
+        // this.dbClient = Types.init(
+        //     {
+        //       id: {
+        //         type: DataTypes.INTEGER,
+        //         autoIncrement: true,
+        //         primaryKey: true,
+        //       },
+        //       name: {
+        //         type: DataTypes.STRING,
+        //         allowNull: false,
+        //         unique: true,
+        //       },
+        //       color: {
+        //         type: DataTypes.STRING,
+        //         allowNull: false,
+        //       }
+        //     },
+        //     {
+        //       sequelize,
+        //       modelName: 'types',
+        //     }
+        //   );
+    }
+
     public async create(typeData) {
         const type = new Type(typeData);
         await type.save();
@@ -10,27 +35,28 @@ export class TypeRepository implements ITypeRepository {
     }
 
     public async findById(id) {
-        return Type.findByPk(id);
+        console.log({ db: this.dbClient })
+        return this.dbClient.findByPk(id);
     }
 
     public async find(query?: any) {
-        return Type.findOne(query);
+        return this.dbClient.findOne(query);
     }
 
     public async update(id, updates) {
-        await Type.update(id, updates);
+        await this.dbClient.update(id, updates);
         // return type;
     }
 
     public async delete(id) {
-        await Type.destroy(id);
+        await this.dbClient.destroy(id);
     }
 
     public async findAll(query?: any) {
-        return Type.findAll(query);
+        return this.dbClient.findAll(query);
     }
 
     public async findByTypeNames(names) {
-        return Type.findAll({ where: { name: { [Op.in]: names } } });
+        return this.dbClient.findAll({ where: { name: { [Op.in]: names } } });
     }
 }

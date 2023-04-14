@@ -1,6 +1,5 @@
 import { NextFunction, Request, Response } from 'express-serve-static-core';
-import { Type } from './models/type.model';
-import { TypeEffectiveness } from './models/typeEffectiveness.model';
+import { Model } from 'sequelize';
 
 export type ExpressRouteFunc = (req: Request, res: Response, next?: NextFunction) => void | Promise<void>;
 
@@ -42,4 +41,38 @@ export interface ITypeRepository {
   delete(id: string): Promise<void>;
   findAll(query?: any): Promise<Type[]>;
   findByTypeNames(names: string[]): Promise<Type[]>;
+}
+
+
+// Models
+interface TypeAttributes {
+  id?: string;
+  name: string;
+  color: string;
+}
+
+interface TypeEffectivenessAttributes {
+  id?: string;
+  sourceId: string;
+  targetId: string;
+  effectiveness: number;
+}
+
+export class Type extends Model<TypeAttributes> implements TypeAttributes {
+  public id!: string;
+  public name!: string;
+  public color!: string;
+
+  public readonly createdAt!: Date;
+  public readonly updatedAt!: Date;
+}
+
+export class TypeEffectiveness extends Model<TypeEffectivenessAttributes> implements TypeEffectivenessAttributes {
+    public id!: string;
+    public sourceId!: string;
+    public targetId!: string;
+    public effectiveness!: number;
+
+    public readonly createdAt!: Date;
+    public readonly updatedAt!: Date;
 }

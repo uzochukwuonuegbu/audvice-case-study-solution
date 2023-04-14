@@ -1,21 +1,6 @@
-import { DataTypes, Model } from 'sequelize';
-import {sequelize } from '../infrastructure/sequelize.orm';
-interface TypeEffectivenessAttributes {
-    id?: string;
-    sourceId: string;
-    targetId: string;
-    effectiveness: number;
-  }
-
-export class TypeEffectiveness extends Model<TypeEffectivenessAttributes> implements TypeEffectivenessAttributes {
-    public id!: string;
-    public sourceId!: string;
-    public targetId!: string;
-    public effectiveness!: number;
-
-    public readonly createdAt!: Date;
-    public readonly updatedAt!: Date;
-}
+import { DataTypes } from 'sequelize';
+import { TypeEffectiveness } from '../interfaces';
+import sequelize from '../infrastructure/sequelize.orm';
 
 TypeEffectiveness.init(
     {
@@ -41,8 +26,8 @@ TypeEffectiveness.init(
   },
   {
     sequelize,
-    modelName: 'typeEffectiveness',
+    tableName: 'typeEffectiveness',
   }
 );
 
-// module.exports = TypeEffectiveness;
+export default TypeEffectiveness;

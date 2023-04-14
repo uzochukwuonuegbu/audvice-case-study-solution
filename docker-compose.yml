@@ -7,17 +7,22 @@ services:
       context: ./
       target: prod
     links:
-      - postgres-db
+      - postgresDb
     volumes:
       - .:/src
     command: npm run start
     ports:
       - '3000:3000'
     environment:
-      - NODE_ENV=prod
-      - PORT=3000
+      DB_HOST: postgresDb
+      DB_PORT: 5432
+      DB_USER: postgres
+      DB_PASSWORD: postgres
+      DB_NAME: audvice
+      NODE_ENV: prod
+      PORT: 3000
     restart: on-failure
-  postgres-db:
+  postgresDb:
     image: postgres
     ports:
       - '5432:5432'
@@ -27,3 +32,5 @@ services:
       POSTGRES_DB: audvice
     volumes:
       - db_data:/var/lib/postgresql/data
+volumes:
+  db_data:

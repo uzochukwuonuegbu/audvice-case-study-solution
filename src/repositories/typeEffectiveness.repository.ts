@@ -1,8 +1,9 @@
 import { Op } from "sequelize";
-import { ITypeEffectivenessRepository } from "../interfaces";
-import { TypeEffectiveness } from "../models/typeEffectiveness.model";
+import { ITypeEffectivenessRepository, TypeEffectiveness } from "../interfaces";
 
 export class TypeEffectivenessRepository implements ITypeEffectivenessRepository {
+    constructor(private dbClient: typeof TypeEffectiveness) {}
+
     public async create(typeData) {
         const typeEffectiveness = new TypeEffectiveness(typeData);
         await typeEffectiveness.save();
@@ -10,31 +11,31 @@ export class TypeEffectivenessRepository implements ITypeEffectivenessRepository
     }
 
     public async findById(id) {
-        return TypeEffectiveness.findByPk(id);
+        return this.dbClient.findByPk(id);
     }
 
     public async find(query?: any) {
-        return TypeEffectiveness.findOne(query);
+        return this.dbClient.findOne(query);
     }
 
     public async update(id, updates) {
-        await TypeEffectiveness.update(id, updates);
+        await this.dbClient.update(id, updates);
         // return type;
     }
 
     public async delete(id) {
-        await TypeEffectiveness.destroy(id);
+        await this.dbClient.destroy(id);
     }
 
     public async findAll(query?: any) {
-        return TypeEffectiveness.findAll(query);
+        return this.dbClient.findAll(query);
     }
 
     public async findBySourceIds(sourceIds: string[]) {
-        return TypeEffectiveness.findAll({ where: { sourceId: { [Op.in]: sourceIds } } });
+        return this.dbClient.findAll({ where: { sourceId: { [Op.in]: sourceIds } } });
     }
 
     public async findByTargetIds(targetIds: string[]) {
-        return TypeEffectiveness.findAll({ where: { targetId: { [Op.in]: targetIds } } });
+        return this.dbClient.findAll({ where: { targetId: { [Op.in]: targetIds } } });
     }
 }
