@@ -1,9 +1,9 @@
 import { TypeController } from './controllers/type.controller';
 import { ITypeController, ITypeEffectivenessRepository, ITypeEffectivenessService, ITypeRepository, ITypeService } from './interfaces';
-import { TypeService } from './services/type.service';
-import { TypeEffectivenessService } from './services/typeEffectiveness.service';
 import { TypeRepository } from './repositories/type.repository';
 import { TypeEffectivenessRepository } from './repositories/typeEffectiveness.repository';
+import { TypeService } from './services/type.service';
+import { TypeEffectivenessService } from './services/typeEffectiveness.service';
 
 
 export function getTypeController(): ITypeController {

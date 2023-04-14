@@ -10,11 +10,13 @@ export class TypeEffectivenessService implements ITypeEffectivenessService {
           this.typeRepository.find({ where: { name: sourceType } }),
           this.typeRepository.find({ where: { name: targetType } }),
         ]);
-        if (!type1 || !type2) throw new Error('Invalid type names');
+        if (!type1 || !type2) {
+          throw new Error('Invalid type names');
+        }
         const typeEffectiveness = await this.typeEffectivenessRepository.create({
+          effectiveness,
           sourceId: type1.id,
           targetId: type2.id,
-          effectiveness,
         });
         return typeEffectiveness;
       } catch (err) {

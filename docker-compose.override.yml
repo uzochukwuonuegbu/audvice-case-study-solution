@@ -7,24 +7,23 @@ services:
       context: ./
       target: dev
     links:
-      - postgres-db
+      - postgres-db-dev
     volumes:
       - .:/src
     command: npm run dev
     ports:
-      - '3000:3000'
+      - '3001:3001'
     environment:
       - NODE_ENV=dev
-      - PORT=3000
+      - PORT=3001
     restart: on-failure
   postgres-db-dev:
     image: postgres
+    ports:
+      - '9001:9001'
     environment:
       POSTGRES_PASSWORD: postgres
       POSTGRES_USER: postgres
       POSTGRES_DB: audvice-dev
     volumes:
       - db_data:/var/lib/postgresql/data
-
-volumes:
-  db_data:

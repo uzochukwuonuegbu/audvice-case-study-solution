@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { ExpressRouteFunc, ITypeController, ITypeService } from "../interfaces";
+import { createTypeSchema } from "./validators/type.validator";
 
 export class TypeController implements ITypeController {
     constructor(private typeService: ITypeService) {
@@ -8,9 +9,12 @@ export class TypeController implements ITypeController {
     public createType(): ExpressRouteFunc {
         return async (req: Request, res: Response) => {
             try {
-                // TODO: validate input
-                const { name, color, dualType = undefined } = req.body;
-                const type = await this.typeService.createType(name, color, dualType);
+                const { error, value } = createTypeSchema.validate(req.body);
+                if (error) {
+                    return res.status(400).json({ error: error.details[0].message });
+                }
+                const { name, color } = value;
+                const type = await this.typeService.createType(name, color);
                 res.status(201).json(type);
             } catch (err) {
                 res.status(400).json({ error: err.message });
@@ -47,8 +51,11 @@ export class TypeController implements ITypeController {
     public updateType(): ExpressRouteFunc {
         return async (req: Request, res: Response) => {
             try {
-                // TODO: validate input
-                await this.typeService.updateType(req.params.id, req.body);
+                const { error, value } = createTypeSchema.validate(req.body);
+                if (error) {
+                    return res.status(400).json({ error: error.details[0].message });
+                }
+                await this.typeService.updateType(req.params.id, value);
                 res.status(200).json({ message: 'Updated Successfully' });
               } catch (err) {
                 res.status(400).json({ error: err.message });

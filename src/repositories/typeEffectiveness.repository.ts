@@ -3,38 +3,38 @@ import { ITypeEffectivenessRepository } from "../interfaces";
 import { TypeEffectiveness } from "../models/typeEffectiveness.model";
 
 export class TypeEffectivenessRepository implements ITypeEffectivenessRepository {
-    async create(typeData) {
+    public async create(typeData) {
         const typeEffectiveness = new TypeEffectiveness(typeData);
         await typeEffectiveness.save();
         return typeEffectiveness;
-      }
-    
-      async findById(id) {
-        return TypeEffectiveness.findByPk(id);
-      }
+    }
 
-      async find(query?: any) {
+    public async findById(id) {
+        return TypeEffectiveness.findByPk(id);
+    }
+
+    public async find(query?: any) {
         return TypeEffectiveness.findOne(query);
-      }
-    
-      async update(id, updates) {
+    }
+
+    public async update(id, updates) {
         await TypeEffectiveness.update(id, updates);
         // return type;
-      }
-    
-      async delete(id) {
+    }
+
+    public async delete(id) {
         await TypeEffectiveness.destroy(id);
-      }
-    
-      async findAll(query?: any) {
+    }
+
+    public async findAll(query?: any) {
         return TypeEffectiveness.findAll(query);
-      }
+    }
 
-      async findBySourceIds(sourceIds: string[]) {
+    public async findBySourceIds(sourceIds: string[]) {
         return TypeEffectiveness.findAll({ where: { sourceId: { [Op.in]: sourceIds } } });
-      }
+    }
 
-      async findByTargetIds(targetIds: string[]) {
+    public async findByTargetIds(targetIds: string[]) {
         return TypeEffectiveness.findAll({ where: { targetId: { [Op.in]: targetIds } } });
-      }
+    }
 }

@@ -13,7 +13,7 @@ export interface ITypeController {
 }
 
 export interface ITypeService {
-  createType(name: string, colour: string, dualTypingName: string | undefined): Promise<Type>
+  createType(name: string, colour: string): Promise<Type>
   getTypeById(id: string): Promise<Type>
   getTypeCounters(names: string[]): Promise<Type[]>
   updateType(id: string, data: any): Promise<void>

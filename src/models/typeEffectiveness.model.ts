@@ -1,13 +1,12 @@
-import { Model, DataTypes } from 'sequelize';
+import { DataTypes, Model } from 'sequelize';
 import {sequelize } from '../infrastructure/sequelize.orm';
-
 interface TypeEffectivenessAttributes {
     id?: string;
     sourceId: string;
     targetId: string;
     effectiveness: number;
   }
-  
+
 export class TypeEffectiveness extends Model<TypeEffectivenessAttributes> implements TypeEffectivenessAttributes {
     public id!: string;
     public sourceId!: string;
