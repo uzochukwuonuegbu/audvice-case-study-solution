@@ -37,7 +37,7 @@ export interface ITypeRepository {
   create(typeData: any): Promise<Type>;
   findById(id: string): Promise<Type | null>;
   find(query?: any): Promise<Type | null>;
-  update(id: string, updates: any): Promise<void>;
+  update(id: string, updates: any): Promise<string>;
   delete(id: string): Promise<void>;
   findAll(query?: any): Promise<Type[]>;
   findByTypeNames(names: string[]): Promise<Type[]>;

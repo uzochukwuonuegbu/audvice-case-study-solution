@@ -27,7 +27,7 @@ export class TypeController implements ITypeController {
     public getTypeCounters(): ExpressRouteFunc {
         return async (req: Request, res: Response) => {
             try {
-                const counters = await this.typeService.getTypeCounters(req.params.name);
+                const counters = await this.typeService.getTypeCounters([req.params.name]);
                 res.status(200).json(counters);
             } catch (err) {
                 throw new BadRequestError(err.message);
@@ -59,7 +59,7 @@ export class TypeController implements ITypeController {
                     throw new InvalidRequestInputError(errorMessage);
                 }
                 await this.typeService.updateType(req.params.id, value);
-                res.status(200).json({ message: 'Updated Successfully' });
+                res.status(200).json({ status: 200, message: 'success', data: { id: req.params.id } });
               } catch (err) {
                 throw new BadRequestError(err.message);
               }

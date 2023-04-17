@@ -9,7 +9,7 @@ const router = Router({
 
 const routes = {
   createType: "/type",
-  getTypeCounters: "/types/:name/counters",
+  getTypeCounters: "/type/:name/counters",
   getTypeById: "/type/:id",
   updateType: "/type/:id",
   deleteType: "/type/:id",

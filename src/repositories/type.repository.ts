@@ -19,9 +19,14 @@ export class TypeRepository implements ITypeRepository {
         return this.dbClient.findOne(query);
     }
 
-    public async update(id, updates) {
-        await this.dbClient.update(id, updates);
-        // return type;
+    public async update(id: string, updates) {
+        const query = {
+            where: {
+                id
+            }
+        }
+        await this.dbClient.update(updates, query);
+        return id;
     }
 
     public async delete(id) {

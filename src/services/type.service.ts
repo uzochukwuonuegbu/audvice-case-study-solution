@@ -21,6 +21,7 @@ export class TypeService implements ITypeService {
     public async getTypeCounters(typeNames: string[]): Promise<Type[]> {
       // Get the Type records for the given type names
       const types = await this.typeRepository.findAll({ where: { name: { [Op.in]: typeNames } } });
+      console.log({ types })
       if (types.length !== typeNames.length) {
         throw new Error(`One or more types not found: ${typeNames.filter((name) => !types.some((type) => type.name === name)).join(', ')}`);
       }
