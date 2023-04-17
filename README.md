@@ -43,7 +43,7 @@
             "updatedAt": "2023-04-17T18:07:10.597Z",
             "createdAt": "2023-04-17T18:07:10.597Z"
         }
-    },
+    }
 
     - URI: /type-effectiveness
     - Description: Saves a Type
@@ -52,7 +52,7 @@
         "sourceId": "8d8742a1-403d-4c40-8311-de648b22b9bf",
         "targetId": "f5f2075c-ce4b-49ce-882e-6491009d18e9",
         "effectiveness": 2
-}
+    }
     - Response: {
         "status": 201,
         "message": "success",
