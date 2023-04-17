@@ -17,6 +17,10 @@ export class TypeService implements ITypeService {
       return this.typeRepository.findById(id);
     }
 
+    public async getTypeByName(name: string): Promise<Type> {
+      return this.typeRepository.findByTypeName(name);
+    }
+
     //   TODO: split to smaller private functions
     public async getTypeCounters(typeNames: string[]): Promise<Type[]> {
       // Get the Type records for the given type names

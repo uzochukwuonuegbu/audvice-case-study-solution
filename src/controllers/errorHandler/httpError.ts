@@ -20,29 +20,34 @@ export class BadRequestError extends HTTPError {
       Object.setPrototypeOf(this, BadRequestError.prototype);
     }
   }
-  
+
 export class UnauthorizedError extends HTTPError {
     constructor(message?: string) {
       super(401, message || 'Unauthorized');
       Object.setPrototypeOf(this, UnauthorizedError.prototype);
     }
   }
-  
+
 export class ForbiddenError extends HTTPError {
     constructor(message?: string) {
       super(403, message || 'Forbidden');
       Object.setPrototypeOf(this, ForbiddenError.prototype);
     }
   }
-  
+
 export class NotFoundError extends HTTPError {
     constructor(message?: string) {
       super(404, message || 'Not Found');
       Object.setPrototypeOf(this, NotFoundError.prototype);
     }
   }
-  
-  
+
+export class RecordExistsError extends HTTPError {
+    constructor(message?: string) {
+      super(400, message || 'Already Exists');
+      Object.setPrototypeOf(this, NotFoundError.prototype);
+    }
+  }
 export class InternalServerError extends HTTPError {
     constructor(message?: string) {
       super(500, message || 'Internal Server Error');

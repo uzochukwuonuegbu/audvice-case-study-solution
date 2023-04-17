@@ -30,11 +30,20 @@ export class TypeRepository implements ITypeRepository {
     }
 
     public async delete(id) {
-        await this.dbClient.destroy(id);
+        const query = {
+            where: {
+                id
+            }
+        }
+        await this.dbClient.destroy(query);
     }
 
     public async findAll(query?: any) {
         return this.dbClient.findAll(query);
+    }
+
+    public async findByTypeName(name: string) {
+        return this.dbClient.findOne({ where: { name } });
     }
 
     public async findByTypeNames(names) {

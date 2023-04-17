@@ -15,6 +15,7 @@ export interface ITypeService {
   createType(name: string, colour: string): Promise<Type>
   getTypeById(id: string): Promise<Type>
   getTypeCounters(names: string[]): Promise<Type[]>
+  getTypeByName(name: string): Promise<Type | null>
   updateType(id: string, data: any): Promise<void>
   deleteType(id: string): Promise< void>
 }
@@ -41,6 +42,7 @@ export interface ITypeRepository {
   delete(id: string): Promise<void>;
   findAll(query?: any): Promise<Type[]>;
   findByTypeNames(names: string[]): Promise<Type[]>;
+  findByTypeName(name: string): Promise<Type>;
 }
 
 

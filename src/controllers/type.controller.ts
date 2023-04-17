@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
+import { NextFunction } from "express-serve-static-core";
 import { ExpressRouteFunc, ITypeController, ITypeService } from "../interfaces";
-import { BadRequestError, InvalidRequestInputError, NotFoundError } from "./errorHandler/httpError";
+import { InvalidRequestInputError, NotFoundError, RecordExistsError } from "./errorHandler/httpError";
 import { createTypeSchema } from "./validators/type.validator";
 
 export class TypeController implements ITypeController {
@@ -8,35 +9,41 @@ export class TypeController implements ITypeController {
     }
 
     public createType(): ExpressRouteFunc {
-        return async (req: Request, res: Response) => {
+        return async (req: Request, res: Response, next: NextFunction) => {
             try {
                 const { error, value } = createTypeSchema.validate(req.body);
                 if (error) {
                     const errorMessage = error.details[0].message;
                     throw new InvalidRequestInputError(errorMessage);
                 }
+
                 const { name, color } = value;
+                const typeExists = await this.typeService.getTypeByName(name);
+                if (typeExists) {
+                    throw new RecordExistsError();
+                }
+
                 const type = await this.typeService.createType(name, color);
                 res.status(201).json({ status: 201, message: 'success', data: type });
             } catch (err) {
-                throw new BadRequestError(err);
+                next(err);
             }
         }
     }
 
     public getTypeCounters(): ExpressRouteFunc {
-        return async (req: Request, res: Response) => {
+        return async (req: Request, res: Response, next: NextFunction) => {
             try {
                 const counters = await this.typeService.getTypeCounters([req.params.name]);
                 res.status(200).json(counters);
             } catch (err) {
-                throw new BadRequestError(err.message);
+                next(err)
             }
         }
     }
 
     public getTypeById(): ExpressRouteFunc {
-        return async (req: Request, res: Response) => {
+        return async (req: Request, res: Response, next: NextFunction) => {
             try {
                 const type = await this.typeService.getTypeById(req.params.id);
                 if (type) {
@@ -45,13 +52,13 @@ export class TypeController implements ITypeController {
                   throw new NotFoundError();
                 }
               } catch (err) {
-                throw new BadRequestError(err.message);
+                next(err);
               }
         }
     }
 
     public updateType(): ExpressRouteFunc {
-        return async (req: Request, res: Response) => {
+        return async (req: Request, res: Response, next: NextFunction) => {
             try {
                 const { error, value } = createTypeSchema.validate(req.body);
                 if (error) {
@@ -61,18 +68,18 @@ export class TypeController implements ITypeController {
                 await this.typeService.updateType(req.params.id, value);
                 res.status(200).json({ status: 200, message: 'success', data: { id: req.params.id } });
               } catch (err) {
-                throw new BadRequestError(err.message);
+                next(err);
               }
         }
     }
 
     public deleteType(): ExpressRouteFunc {
-        return async (req: Request, res: Response) => {
+        return async (req: Request, res: Response, next: NextFunction) => {
             try {
                 await this.typeService.deleteType(req.params.id);
                 res.status(200).json({ message: 'Type deleted' });
               } catch (err) {
-                throw new BadRequestError(err.message);
+                next(err);
               }
         }
     }
