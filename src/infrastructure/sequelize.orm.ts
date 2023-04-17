@@ -1,6 +1,5 @@
 import { Sequelize } from 'sequelize';
 
-// TODO: use config instead
 const sequelize = new Sequelize({
   dialect: 'postgres',
   host: process.env.DB_HOST || 'localhost',

@@ -30,8 +30,6 @@ export interface ITypeEffectivenessService {
   getTypeEffectivenessBySourceIds(sourceIds: string[]): Promise<TypeEffectiveness[]>
   getTypeEffectivenessBySourceIdAndTargetId(sourceId: string, targetId: string): Promise<TypeEffectiveness | null>
 }
-
-// TODO: make DRY
 export interface ITypeEffectivenessRepository {
   create(typeData: any): Promise<TypeEffectiveness>;
   update(id: string, data: any): Promise<string>;
