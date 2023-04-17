@@ -23,14 +23,15 @@ services:
       PORT: 3001
     restart: on-failure
   postgresDbDev:
-    image: postgres
+    image: postgres:latest
     ports:
       - '9001:9001'
     environment:
       POSTGRES_PASSWORD: postgres
       POSTGRES_USER: postgres
       POSTGRES_DB: audvice-dev
-    volumes:
-      - db_data:/var/lib/postgresql/data
-volumes:
-  db_data:
+      POSTGRES_HOST: postgresDbDev
+    # volumes:
+    #   - db_data:/var/lib/postgresql/data
+# volumes:
+#   db_data:

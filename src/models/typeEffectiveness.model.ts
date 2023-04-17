@@ -1,6 +1,6 @@
 import { DataTypes, UUIDV4 } from 'sequelize';
-import { TypeEffectiveness } from '../interfaces';
 import sequelize from '../infrastructure/sequelize.orm';
+import { TypeEffectiveness } from '../interfaces';
 
 TypeEffectiveness.init(
     {

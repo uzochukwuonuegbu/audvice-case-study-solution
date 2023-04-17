@@ -25,16 +25,9 @@ export function getTypeEffectivenessService(): ITypeEffectivenessService {
 }
 
 export function getTypeRepository(): ITypeRepository {
-    Type;
     return new TypeRepository(Type);
 }
 
 export function getTypeEffectivenessRepository(): ITypeEffectivenessRepository {
     return new TypeEffectivenessRepository(TypeEffectiveness);
 }
-
-// export function getDbClient(model) {
-//     model;
-//     console.log({ model })
-//     return model;
-// }

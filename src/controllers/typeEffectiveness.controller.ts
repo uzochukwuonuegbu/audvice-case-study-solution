@@ -24,7 +24,7 @@ export class TypeEffectivenessController implements ITypeEffectivenessController
                 }
 
                 const data = await this.typeEffectivenessService.createTypeEffectiveness(sourceId, targetId, effectiveness);
-                res.status(201).json({ status: 201, message: 'success', data });
+                res.status(201).json({ data, status: 201, message: 'success' });
             } catch (err) {
                 next(err);
             }
