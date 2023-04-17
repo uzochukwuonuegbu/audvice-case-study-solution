@@ -8,11 +8,11 @@ const router = Router({
 });
 
 const routes = {
-  createType: "/typeEffectiveness",
+  createTypeEffectiveness: "/type-effectiveness",
 };
 
 router.post(
-    routes.createType,
+    routes.createTypeEffectiveness,
     ctrl.createTypeOrUpdateEffectiveness()
 );
 

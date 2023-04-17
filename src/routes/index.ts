@@ -1,10 +1,12 @@
-import { Router } from "express";
-import routes from "./type.routes";
+import { Router } from 'express';
+import typeRoutes from './type.routes';
+import typeEffectivenessRoutes from './typeEffectiveness.routes';
 
 const router = Router();
 
 router.use(
-  routes,
+  typeRoutes,
+  typeEffectivenessRoutes
 );
 
 export default router;

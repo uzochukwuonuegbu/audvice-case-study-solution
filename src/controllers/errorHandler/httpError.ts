@@ -59,7 +59,12 @@ export const errorHandler = (err: Error, req: Request, res: Response, next: Next
     if (err instanceof HTTPError) {
         const { status, message } = err;
         res.status(status).json({ error: message });
-    } else {
+    }
+    else if (err instanceof Error) {
+      const { message } = err;
+      res.status(400).json({ error: message });
+    }
+    else {
         console.error(err);
         res.status(500).json({ error: 'Internal Server Error' });
     }
