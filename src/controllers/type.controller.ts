@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { ExpressRouteFunc, ITypeController, ITypeService } from "../interfaces";
+import { BadRequestError, InvalidRequestInputError, NotFoundError } from "./errorHandler/httpError";
 import { createTypeSchema } from "./validators/type.validator";
 
 export class TypeController implements ITypeController {
@@ -11,13 +12,14 @@ export class TypeController implements ITypeController {
             try {
                 const { error, value } = createTypeSchema.validate(req.body);
                 if (error) {
-                    return res.status(400).json({ error: error.details[0].message });
+                    const errorMessage = error.details[0].message;
+                    throw new InvalidRequestInputError(errorMessage);
                 }
                 const { name, color } = value;
                 const type = await this.typeService.createType(name, color);
-                res.status(201).json(type);
+                res.status(201).json({ status: 201, message: 'success', data: type });
             } catch (err) {
-                res.status(400).json({ error: err.message });
+                throw new BadRequestError(err);
             }
         }
     }
@@ -28,7 +30,7 @@ export class TypeController implements ITypeController {
                 const counters = await this.typeService.getTypeCounters(req.params.name);
                 res.status(200).json(counters);
             } catch (err) {
-                res.status(400).json({ error: err.message });
+                throw new BadRequestError(err.message);
             }
         }
     }
@@ -40,10 +42,10 @@ export class TypeController implements ITypeController {
                 if (type) {
                   res.status(200).json(type);
                 } else {
-                  res.status(404).json({ error: 'Type not found' });
+                  throw new NotFoundError();
                 }
               } catch (err) {
-                res.status(400).json({ error: err.message });
+                throw new BadRequestError(err.message);
               }
         }
     }
@@ -53,12 +55,13 @@ export class TypeController implements ITypeController {
             try {
                 const { error, value } = createTypeSchema.validate(req.body);
                 if (error) {
-                    return res.status(400).json({ error: error.details[0].message });
+                    const errorMessage = error.details[0].message;
+                    throw new InvalidRequestInputError(errorMessage);
                 }
                 await this.typeService.updateType(req.params.id, value);
                 res.status(200).json({ message: 'Updated Successfully' });
               } catch (err) {
-                res.status(400).json({ error: err.message });
+                throw new BadRequestError(err.message);
               }
         }
     }
@@ -69,7 +72,7 @@ export class TypeController implements ITypeController {
                 await this.typeService.deleteType(req.params.id);
                 res.status(200).json({ message: 'Type deleted' });
               } catch (err) {
-                res.status(400).json({ error: err.message });
+                throw new BadRequestError(err.message);
               }
         }
     }

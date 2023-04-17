@@ -20,6 +20,7 @@ export function getTypeEffectivenessService(): ITypeEffectivenessService {
 }
 
 export function getTypeRepository(): ITypeRepository {
+    Type;
     return new TypeRepository(Type);
 }
 

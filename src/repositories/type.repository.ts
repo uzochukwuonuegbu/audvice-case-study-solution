@@ -1,41 +1,17 @@
 import { DataTypes, Op } from 'sequelize';
 import { ITypeRepository, Type } from '../interfaces';
-// import sequelize from '../infrastructure/sequelize.orm';
+import sequelize from '../infrastructure/sequelize.orm';
 
 export class TypeRepository implements ITypeRepository {
     constructor(private dbClient: typeof Type) {
-        // this.dbClient = Types.init(
-        //     {
-        //       id: {
-        //         type: DataTypes.INTEGER,
-        //         autoIncrement: true,
-        //         primaryKey: true,
-        //       },
-        //       name: {
-        //         type: DataTypes.STRING,
-        //         allowNull: false,
-        //         unique: true,
-        //       },
-        //       color: {
-        //         type: DataTypes.STRING,
-        //         allowNull: false,
-        //       }
-        //     },
-        //     {
-        //       sequelize,
-        //       modelName: 'types',
-        //     }
-        //   );
     }
 
     public async create(typeData) {
-        const type = new Type(typeData);
-        await type.save();
-        return type;
+        // console.log({ query: })
+        return this.dbClient.create(typeData);
     }
 
     public async findById(id) {
-        console.log({ db: this.dbClient })
         return this.dbClient.findByPk(id);
     }
 

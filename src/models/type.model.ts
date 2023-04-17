@@ -1,13 +1,14 @@
-import { DataTypes } from 'sequelize';
+import { DataTypes, UUIDV4 } from 'sequelize';
 import sequelize from '../infrastructure/sequelize.orm';
 import { Type } from '../interfaces';
 
 Type.init(
   {
     id: {
-      type: DataTypes.INTEGER,
-      autoIncrement: true,
+      type: DataTypes.UUIDV4,
       primaryKey: true,
+      defaultValue: UUIDV4,
+      allowNull: false
     },
     name: {
       type: DataTypes.STRING,
@@ -21,7 +22,7 @@ Type.init(
   },
   {
     sequelize,
-    tableName: 'type',
+    tableName: 'types',
   }
 );
 
