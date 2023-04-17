@@ -11,6 +11,10 @@ export interface ITypeController {
   deleteType(): ExpressRouteFunc
 }
 
+export interface ITypeEffectivenessController {
+  createTypeOrUpdateEffectiveness(): ExpressRouteFunc
+}
+
 export interface ITypeService {
   createType(name: string, colour: string): Promise<Type>
   getTypeById(id: string): Promise<Type>
@@ -21,14 +25,19 @@ export interface ITypeService {
 }
 
 export interface ITypeEffectivenessService {
+  createTypeEffectiveness(sourceType: string, targetType: string, effectiveness: number): Promise<TypeEffectiveness>
+  updateTypeEffectiveness(id: string, data: any): Promise<void>
   getTypeEffectivenessBySourceIds(sourceIds: string[]): Promise<TypeEffectiveness[]>
+  getTypeEffectivenessBySourceIdAndTargetId(sourceId: string, targetId: string): Promise<TypeEffectiveness | null>
 }
 
 // TODO: make DRY
 export interface ITypeEffectivenessRepository {
   create(typeData: any): Promise<TypeEffectiveness>;
+  update(id: string, data: any): Promise<string>;
   findBySourceIds(sourceIds: string[]): Promise<TypeEffectiveness[]>;
   findByTargetIds(targetIds: string[]): Promise<TypeEffectiveness[]>;
+  findByTargetIdAndSourceId(sourceId: string, targetId: string): Promise<TypeEffectiveness | null>
 }
 export interface ITypeRepository {
   create(typeData: any): Promise<Type>;

@@ -32,4 +32,17 @@ export class TypeEffectivenessService implements ITypeEffectivenessService {
       throw new Error('Failed to get TypeEffectiveness');
     }
   }
+
+  public async getTypeEffectivenessBySourceIdAndTargetId(sourceId: string, targetId: string) {
+    try {
+        const typeEffectivenessArray = this.typeEffectivenessRepository.findByTargetIdAndSourceId(sourceId, targetId);
+        return typeEffectivenessArray;
+    } catch (err) {
+      throw new Error('Failed to get TypeEffectiveness');
+    }
   }
+
+  public async updateTypeEffectiveness(id: string, data: any): Promise<void> {
+    await this.typeEffectivenessRepository.update(id, data);
+  }
+}
