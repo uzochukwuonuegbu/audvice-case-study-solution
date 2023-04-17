@@ -16,6 +16,18 @@ CREATE TABLE IF NOT EXISTS "types" (
 
 );
 
+CREATE TABLE IF NOT EXISTS "typeEffectiveness" (
+
+  "id" varchar(250) NOT NULL,   
+  "sourceId" varchar(250) NOT NULL,
+  "targetId" varchar(250) NOT NULL,
+  "effectiveness" float NOT NULL,
+  "createdAt" timestamp NOT NULL,
+  "updatedAt" timestamp NOT NULL,
+   PRIMARY KEY  ("id")
+
+);
+
 SELECT tablename
 FROM pg_catalog.pg_tables
 WHERE schemaname NOT IN ('pg_catalog','information_schema');

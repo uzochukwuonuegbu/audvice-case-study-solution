@@ -1,13 +1,11 @@
-import { DataTypes, Op } from 'sequelize';
+import { Op } from 'sequelize';
 import { ITypeRepository, Type } from '../interfaces';
-import sequelize from '../infrastructure/sequelize.orm';
 
 export class TypeRepository implements ITypeRepository {
     constructor(private dbClient: typeof Type) {
     }
 
     public async create(typeData) {
-        // console.log({ query: })
         return this.dbClient.create(typeData);
     }
 

@@ -27,12 +27,8 @@ export interface ITypeEffectivenessService {
 // TODO: make DRY
 export interface ITypeEffectivenessRepository {
   create(typeData: any): Promise<TypeEffectiveness>;
-  findById(id: string): Promise<TypeEffectiveness | null>;
-  find(query?: any): Promise<TypeEffectiveness | null>;
-  update(id: string, updates: any): Promise<void>;
-  delete(id: string): Promise<void>;
-  findAll(query?: any): Promise<TypeEffectiveness[]>;
   findBySourceIds(sourceIds: string[]): Promise<TypeEffectiveness[]>;
+  findByTargetIds(targetIds: string[]): Promise<TypeEffectiveness[]>;
 }
 export interface ITypeRepository {
   create(typeData: any): Promise<Type>;
