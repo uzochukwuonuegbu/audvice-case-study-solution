@@ -1,4 +1,4 @@
-# Audice Senior Backend Engineer Case Stufy
+# Audice Senior Backend Engineer Case Study
 
 ## Getting Started:
 
