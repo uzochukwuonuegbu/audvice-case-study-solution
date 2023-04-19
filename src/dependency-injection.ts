@@ -17,7 +17,7 @@ export function getTypeEffectivenessController(): ITypeEffectivenessController {
 }
 
 export function getTypeService(): ITypeService {
-    return new TypeService(getTypeEffectivenessService(), getTypeRepository());
+    return new TypeService(getTypeRepository(), getTypeEffectivenessRepository());
 }
 
 export function getTypeEffectivenessService(): ITypeEffectivenessService {

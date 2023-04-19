@@ -1,17 +1,17 @@
 import { Op } from "sequelize";
-import { ITypeEffectivenessService, ITypeRepository, ITypeService, Type } from "../interfaces";
+import { ITypeEffectivenessRepository, ITypeRepository, ITypeService, Type } from "../interfaces";
 
 export class TypeService implements ITypeService {
-    constructor(private typeEffectivenessService: ITypeEffectivenessService, private typeRepository: ITypeRepository) {}
+  constructor(private typeRepository: ITypeRepository, private typeEffectivenessRepository: ITypeEffectivenessRepository) {}
 
-    public async createType(name: string, color: string): Promise<Type> {
-      const type = await this.typeRepository.create({
-        name,
-        color,
-      });
+  public async createType(name: string, color: string): Promise<Type> {
+    const type = await this.typeRepository.create({
+      name,
+      color,
+    });
 
-      return type;
-    }
+    return type;
+  }
 
     public async getTypeById(id: string): Promise<Type> {
       return this.typeRepository.findById(id);
@@ -31,7 +31,7 @@ export class TypeService implements ITypeService {
 
       // Find all Type records where effectiveness is 2 for any of the given types
       const typeIds = types.map((type) => type.id);
-      const typeEffectivenesses = await this.typeEffectivenessService.getTypeEffectivenessBySourceIds(typeIds);
+      const typeEffectivenesses = await this.typeEffectivenessRepository.findBySourceIds(typeIds);
 
       // Get the Type records for each matching TypeEffectiveness
       const targetTypeIds = typeEffectivenesses.map((te) => te.targetId);
