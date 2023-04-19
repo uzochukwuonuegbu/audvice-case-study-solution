@@ -35,7 +35,7 @@ export class TypeController implements ITypeController {
         return async (req: Request, res: Response, next: NextFunction) => {
             try {
                 const counters = await this.typeService.getTypeCounters([req.params.name]);
-                res.status(200).json(counters);
+                res.status(200).json({ status: 200, message: 'success', data: counters });
             } catch (err) {
                 next(err)
             }
@@ -47,7 +47,7 @@ export class TypeController implements ITypeController {
             try {
                 const type = await this.typeService.getTypeById(req.params.id);
                 if (type) {
-                  res.status(200).json(type);
+                  res.status(200).json({ status: 200, message: 'success', data: type });
                 } else {
                   throw new NotFoundError();
                 }
@@ -77,7 +77,7 @@ export class TypeController implements ITypeController {
         return async (req: Request, res: Response, next: NextFunction) => {
             try {
                 await this.typeService.deleteType(req.params.id);
-                res.status(200).json({ message: 'Type deleted' });
+                res.status(200).json({ status: 200, message: 'Type deleted' });
               } catch (err) {
                 next(err);
               }
