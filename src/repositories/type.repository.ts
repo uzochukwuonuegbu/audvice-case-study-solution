@@ -1,50 +1,17 @@
 import { Op } from 'sequelize';
 import { ITypeRepository, Type } from '../interfaces';
+import { BaseRepository } from './base.repository';
 
-export class TypeRepository implements ITypeRepository {
-    constructor(private dbClient: typeof Type) {
+export class TypeRepository extends BaseRepository<Type> implements ITypeRepository {
+    constructor(dbClient: typeof Type) {
+      super(dbClient);
     }
 
-    public async create(typeData) {
-        return this.dbClient.create(typeData);
+    public async findByTypeName(name: string): Promise<Type | null> {
+      return this.dbClient.findOne({ where: { name } });
     }
-
-    public async findById(id) {
-        return this.dbClient.findByPk(id);
+  
+    public async findByTypeNames(names: string[]): Promise<Type[]> {
+      return this.dbClient.findAll({ where: { name: { [Op.in]: names } } });
     }
-
-    public async find(query?: any) {
-        return this.dbClient.findOne(query);
-    }
-
-    public async update(id: string, updates) {
-        const query = {
-            where: {
-                id
-            }
-        }
-        await this.dbClient.update(updates, query);
-        return id;
-    }
-
-    public async delete(id) {
-        const query = {
-            where: {
-                id
-            }
-        }
-        await this.dbClient.destroy(query);
-    }
-
-    public async findAll(query?: any) {
-        return this.dbClient.findAll(query);
-    }
-
-    public async findByTypeName(name: string) {
-        return this.dbClient.findOne({ where: { name } });
-    }
-
-    public async findByTypeNames(names) {
-        return this.dbClient.findAll({ where: { name: { [Op.in]: names } } });
-    }
-}
+  }
